@@ -170,17 +170,18 @@ INSERT INTO Orden_detalles (OrdenID, PiezaID, Cantidad, Precio, ClienteID) VALUE
 (10, 10, 6, '1500000', 10);
 
 -- Insert data into Reparaciones
-INSERT INTO Reparaciones (ReparaciónID, Fecha, VehículoID, EmpleadoID, ServicioID, CostoTotal, Descripción) VALUES 
-(1, '2024-01-10', 1, 1, 1, '50000', 'Cambio de aceite'),
-(2, '2024-02-15', 2, 2, 2, '70000', 'Alineación'),
-(3, '2024-03-20', 3, 3, 3, '40000', 'Balanceo'),
-(4, '2024-04-25', 4, 4, 4, '150000', 'Cambio de frenos'),
-(5, '2024-05-30', 5, 5, 5, '200000', 'Revisión general'),
-(6, '2024-06-04', 6, 6, 6, '60000', 'Cambio de bujías'),
-(7, '2024-07-09', 7, 7, 7, '80000', 'Cambio de filtros'),
-(8, '2024-08-14', 8, 10, 8, '500000', 'Reparación de motor'),
-(9, '2024-09-19', 9, 10, 9, '250000', 'Cambio de batería'),
-(10, '2024-10-24', 10, 10, 10, '30000', 'Lavado y engrase');
+INSERT INTO Reparaciones (ReparaciónID, Fecha, VehículoID, EmpleadoID, ServicioID, CostoTotal, Descripción, duracion) VALUES 
+(1, '2024-01-10', 1, 1, 1, '50000', 'Cambio de aceite', '01:30:00'),
+(2, '2024-02-15', 2, 2, 2, '70000', 'Alineación', '02:00:00'),
+(3, '2024-03-20', 3, 3, 3, '40000', 'Balanceo', '01:00:00'),
+(4, '2024-04-25', 4, 4, 4, '150000', 'Cambio de frenos', '03:00:00'),
+(5, '2024-05-30', 5, 5, 5, '200000', 'Revisión general', '04:00:00'),
+(6, '2024-06-04', 6, 6, 6, '60000', 'Cambio de bujías', '01:45:00'),
+(7, '2024-07-09', 7, 7, 7, '80000', 'Cambio de filtros', '02:15:00'),
+(8, '2024-08-14', 8, 8, 8, '500000', 'Reparación de motor', '05:30:00'),
+(9, '2024-09-19', 9, 9, 9, '250000', 'Cambio de batería', '01:15:00'),
+(10, '2024-10-24', 10, 10, 10, '30000', 'Lavado y engrase', '01:00:00');
+
 
 -- Insert data into Reparacion_Piezas
 INSERT INTO Reparacion_Piezas (ReparaciónID, PiezaID, Cantidad) VALUES 

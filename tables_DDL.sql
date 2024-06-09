@@ -70,16 +70,7 @@ CREATE TABLE Servicios (
     Costo INT
 );
 
-CREATE TABLE Taller (
-    TallerID INT PRIMARY KEY,
-    Nombre VARCHAR(40),
-    ciudadID INT,
-    EmpleadoID INT,
-    ClienteID INT,
-    FOREIGN KEY (ciudadID) REFERENCES Ciudad(ciudadID),
-    FOREIGN KEY (EmpleadoID) REFERENCES Empleados(EmpleadoID),
-    FOREIGN KEY (ClienteID) REFERENCES Clientes(ClienteID)
-);
+
 
 CREATE TABLE Piezas (
     PiezaID INT PRIMARY KEY,
@@ -128,11 +119,21 @@ CREATE TABLE Reparaciones (
     ServicioID INT,
     CostoTotal VARCHAR(50),
     Descripción VARCHAR(50),
+    duracion TIME,
     FOREIGN KEY (VehículoID) REFERENCES Vehículos(VehículoID),
     FOREIGN KEY (EmpleadoID) REFERENCES Empleados(EmpleadoID),
     FOREIGN KEY (ServicioID) REFERENCES Servicios(ServicioID)
 );
-
+CREATE TABLE Taller (
+    TallerID INT PRIMARY KEY,
+    Nombre VARCHAR(40),
+    ciudadID INT,
+    EmpleadoID INT,
+    ClienteID INT,
+    FOREIGN KEY (ciudadID) REFERENCES Ciudad(ciudadID),
+    FOREIGN KEY (EmpleadoID) REFERENCES Empleados(EmpleadoID),
+    FOREIGN KEY (ClienteID) REFERENCES Clientes(ClienteID)
+);
 CREATE TABLE Reparacion_Piezas (
     ReparaciónID INT,
     PiezaID INT,

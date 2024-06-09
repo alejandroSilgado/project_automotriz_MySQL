@@ -200,24 +200,67 @@ GROUP BY
     e.ProveedorID, e.Nombre, e.Contacto
 ORDER BY 
     CantidadPiezas DESC;
+-- 16. Listar los clientes que no han realizado reparaciones en el último año
+SELECT 
+    c.*
+FROM 
+	reparaciones r
+JOIN 
+	Vehículos v ON r.VehículoID = v.VehículoID
+RIGHT JOIN 
+	clientes c ON c.ClienteID = v.VehículoID
+WHERE
+    r.ReparaciónID IS NULL;
+-- 17. Obtener las ganancias totales del taller en un período específico
+SELECT 
+    SUM(r.CostoTotal) AS GananciasTotales
+FROM 
+    reparaciones r
+INNER JOIN 
+    Vehículos v ON r.VehículoID = v.VehículoID
+INNER JOIN 
+    clientes c ON v.ClienteID = c.ClienteID
+WHERE
+    r.fecha BETWEEN '2024-01-10 ' AND '2024-08-24';
 
-SELECT * FROM pieza_detalle;
+-- 18. Listar los empleados y el total de horas trabajadas en reparaciones en un
+-- período específico (asumiendo que se registra la duración de cada reparación).
 
-SELECT * FROM proveedores;
+SELECT 
+    e.EmpleadoID,
+    e.Nombre,
+    e.Apellido,
+    SUM(TIME_TO_SEC(r.duracion) / 3600) AS TotalHorasTrabajadas
+FROM 
+    Reparaciones r
+INNER JOIN 
+    Empleados e ON r.EmpleadoID = e.EmpleadoID
+WHERE
+    r.Fecha BETWEEN '2024-01-01' AND '2024-12-31' 
+GROUP BY 
+    e.EmpleadoID, e.Nombre, e.Apellido
+ORDER BY 
+    TotalHorasTrabajadas DESC;
 
+-- 19. Obtener el listado de servicios prestados por cada empleado en un período
+-- específico
 
-
-SELECT * FROM reparaciones;
-
-SELECT * FROM empleados;
-
+SELECT 
+    e.EmpleadoID,
+    e.Nombre,
+    e.Apellido,
+    s.Nombre AS Servicio,
+    r.Fecha,
+    r.CostoTotal
+FROM 
+    Reparaciones r
+INNER JOIN 
+    Empleados e ON r.EmpleadoID = e.EmpleadoID
+INNER JOIN 
+    Servicios s ON r.ServicioID = s.ServicioID
+WHERE
+    r.Fecha BETWEEN '2024-01-01' AND '2024-12-31' 
+ORDER BY 
+    e.EmpleadoID, r.Fecha;
     
-SELECT * FROM reparaciones;
 
-SELECT * FROM ordenes_compras;
-
-SELECT * FROM Orden_Detalles;
-
-SELECT * FROM Ordenes_Compra;
-
-SELECT * FROM Vehículos;

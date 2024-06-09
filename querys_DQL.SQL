@@ -172,6 +172,26 @@ GROUP BY
 ORDER BY 
     CantidadReparaciones DESC;
 
+-- 13. Obtener las piezas más utilizadas en reparaciones durante un período
+-- específico
+
+
+SELECT 
+    p.Nombre AS Pieza,
+    SUM(rp.Cantidad) AS TotalUso
+FROM 
+    Reparaciones r
+INNER JOIN 
+    Reparacion_Piezas rp ON r.ReparacionID = rp.ReparacionID
+INNER JOIN 
+    Piezas p ON rp.PiezaID = p.PiezaID
+WHERE
+    r.Fecha BETWEEN '2024-01-01' AND '2024-12-31' -- Especifica el período deseado aquí
+GROUP BY 
+    p.Nombre
+ORDER BY 
+    TotalUso DESC;
+
 -- 14. Calcular el promedio de costo de reparaciones por vehículo
 
 SELECT 
@@ -212,7 +232,7 @@ RIGHT JOIN
 WHERE
     r.ReparaciónID IS NULL;
 -- 17. Obtener las ganancias totales del taller en un período específico
-SELECT 
+SELECT
     SUM(r.CostoTotal) AS GananciasTotales
 FROM 
     reparaciones r

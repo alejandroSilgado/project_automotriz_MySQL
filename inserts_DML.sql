@@ -178,8 +178,8 @@ INSERT INTO Reparaciones (ReparaciónID, Fecha, VehículoID, EmpleadoID, Servici
 (5, '2024-05-30', 5, 5, 5, '200000', 'Revisión general', '04:00:00'),
 (6, '2024-06-04', 6, 6, 6, '60000', 'Cambio de bujías', '01:45:00'),
 (7, '2024-07-09', 7, 7, 7, '80000', 'Cambio de filtros', '02:15:00'),
-(8, '2024-08-14', 8, 8, 8, '500000', 'Reparación de motor', '05:30:00'),
-(9, '2024-09-19', 9, 9, 9, '250000', 'Cambio de batería', '01:15:00'),
+(8, '2024-08-14', 10, 10, 8, '500000', 'Reparación de motor', '05:30:00'),
+(9, '2024-09-19', 10, 10, 9, '250000', 'Cambio de batería', '01:15:00'),
 (10, '2024-10-24', 10, 10, 10, '30000', 'Lavado y engrase', '01:00:00');
 
 

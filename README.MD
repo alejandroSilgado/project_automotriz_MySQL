@@ -1,8 +1,6 @@
-Aquí tienes el README arreglado y presentado de manera más atractiva:
 
----
+# *Consultas de Reparaciones y Servicios de Vehículos*
 
-# Consultas de Reparaciones y Servicios de Vehículos
 
 ## 1. Obtener el historial de reparaciones de un vehículo específico
 
@@ -135,7 +133,6 @@ WHERE
 
 ## 6. Generar una factura para un cliente específico en una fecha determinada
 
-Aquí está la consulta 6 en formato Markdown:
 
 ```sql
 SELECT 
@@ -160,6 +157,7 @@ WHERE
 
 ---
 
+
 ## 7. Listar todas las órdenes de compra y sus detalles
 
 ```sql
@@ -175,20 +173,18 @@ JOIN
     orden_detalles OD ON OD.OrdenID = OC.OrdenID;
 ```
 
-| OrdenID | Fecha               | cantidad | precio  | total   |
-|---------|---------------------|----------|---------|---------|
-|       1 | 2024-01-01 00:00:00 |       10 | 300000  | 300000  |
-|       2 | 2024-02-01 00:00:00 |        5 | 250000  | 500000  |
-|       3 | 2024-03-01 00:00:00 |        7 | 140000  | 700000  |
-|       4 | 2024-04-01 00:00:00 |        2 | 80000   | 200000  |
-|       5 | 2024-05-01 00:00:00 |       12 | 720000  | 600000  |
-|       6 | 2024-06-01 00:00:00 |        1 | 150000  | 800000  |
-|       7 | 2024-07-01 00:00:00 |        8 | 1600000 | 150000  |
-|       8 | 2024-08-01 00:00:00 |        4 | 1200000 | 400000  |
-|       9 | 2024-09-01 00:00
-
-:00 |        3 | 240000  | 500000  |
-|      10 | 2024-10-01 00:00:00 |        6 | 1500000 | 1000000 |
+| OrdenID | Fecha               | cantidad | precio   | total   |
+|---------|---------------------|----------|----------|---------|
+|       1 | 2024-01-01 00:00:00 |       10 | 300000   | 300000  |
+|       2 | 2024-02-01 00:00:00 |        5 | 250000   | 500000  |
+|       3 | 2024-03-01 00:00:00 |        7 | 140000   | 700000  |
+|       4 | 2024-04-01 00:00:00 |        2 | 80000    | 200000  |
+|       5 | 2024-05-01 00:00:00 |       12 | 720000   | 600000  |
+|       6 | 2024-06-01 00:00:00 |        1 | 150000   | 800000  |
+|       7 | 2024-07-01 00:00:00 |        8 | 1600000  | 150000  |
+|       8 | 2024-08-01 00:00:00 |        4 | 1200000  | 400000  |
+|       9 | 2024-09-01 00:00:00 |        3 | 240000   | 500000  |
+|      10 | 2024-10-01 00:00:00 |        6 | 1500000  | 1000000 |
 
 ---
 
@@ -311,6 +307,7 @@ ORDER BY
 |        10 | Sofia  | Rojas     |                  30000 |
 
 ---
+---
 
 ## 12. Listar los empleados con mayor cantidad de reparaciones realizadas en un período específico
 
@@ -325,16 +322,15 @@ FROM
 INNER JOIN 
     empleados e ON e.EmpleadoID = r.EmpleadoID
 WHERE
-    DATE(r.Fecha )BETWEEN '2024-01-10 00:00:00' AND '2024-10-24 00:00:00'
+    DATE(r.Fecha) BETWEEN '2024-01-10 00:00:00' AND '2024-10-24 00:00:00'
 GROUP BY 
     e.EmpleadoID, e.Nombre, e.Apellido
 ORDER BY 
     CantidadReparaciones DESC;
 ```
 
-+------------+--------+-----------+----------------------+
 | EmpleadoID | Nombre | Apellido  | CantidadReparaciones |
-+------------+--------+-----------+----------------------+
+|------------|--------|-----------|----------------------|
 |          5 | Juan   | Torres    |                    1 |
 |          2 | Ana    | Martinez  |                    1 |
 |          9 | Diego  | Ramirez   |                    1 |
@@ -345,7 +341,7 @@ ORDER BY
 |          4 | Laura  | Perez     |                    1 |
 |          1 | Carlos | Lopez     |                    1 |
 |          8 | Luisa  | Fernandez |                    1 |
-+------------+--------+-----------+----------------------+
+
 ---
 
 ## 13. Obtener las piezas más utilizadas en reparaciones durante un período específico
@@ -367,9 +363,9 @@ GROUP BY
 ORDER BY 
     TotalUso DESC;
 ```
-+----------------------+----------+
+
 | Pieza                | TotalUso |
-+----------------------+----------+
+|----------------------|----------|
 | Radiador             |       10 |
 | Correa de distribuci |        9 |
 | Amortiguadores       |        8 |
@@ -380,7 +376,8 @@ ORDER BY
 | Bujías               |        3 |
 | Pastillas de freno   |        2 |
 | Filtro de aire       |        1 |
-+----------------------+----------+
+
+---
 
 ## 14. Calcular el promedio de costo de reparaciones por vehículo
 
@@ -395,9 +392,9 @@ INNER JOIN
 GROUP BY 
     v.VehículoID;
 ```
-+------------+---------------------------+
+
 | VehículoID | PromedioCostoReparaciones |
-+------------+---------------------------+
+|------------|---------------------------|
 |          1 |                     50000 |
 |          2 |                     70000 |
 |          3 |                     40000 |
@@ -408,7 +405,9 @@ GROUP BY
 |          8 |                    500000 |
 |          9 |                    250000 |
 |         10 |                     30000 |
-+------------+---------------------------+
+
+---
+
 ## 15. Obtener el inventario de piezas por proveedor
 
 ```sql
@@ -428,20 +427,22 @@ GROUP BY
 ORDER BY 
     CantidadPiezas DESC;
 ```
-+---------------------+-----------------+----------------+----------------------+-------------------------------+--------+
+
 | Nombre              | Contacto        | CantidadPiezas | Nombre               | Descripción                  | Precio |
-+---------------------+-----------------+----------------+----------------------+-------------------------------+--------+
-| Autopartes Colombia | Juan Perez      |              1 | Filtro de aire       | Filtro de aire para motor     | 30000  |
-| Partes Automotrices | Luisa Gonzalez  |              1 | Correa de distribuci | Correa de distribución        | 80000  |
-| Equipos y Repuestos | Luis Ramirez    |              1 | Aceite de motor      | Aceite 10W-40                 | 40000  |
-| Distribuidora Norte | Diego Lopez     |              1 | Llantas              | Llanta 195/65R15              | 200000 |
-| Repuestos y Más     | Carlos Gomez    |              1 | Pastillas de freno   | Pastillas de freno delanteras | 50000  |
-| Autorepuestos       | Juan Garcia     |              1 | Radiador             | Radiador de agua              | 250000 |
-| Partes y Piezas     | Laura Diaz      |              1 | Filtro de aceite     | Filtro de aceite              | 25000  |
-| Repuestos Express   | Sofia Jimenez   |              1 | Amortiguadores       | Amortiguadores delanteros     | 300000 |
-| Motorpartes         | Ana Torres      |              1 | Bujías               | Bujías para motor             | 20000  |
-| Repuestos del Sur   | Pedro Fernandez |              1 | Batería              | Batería de 12V                | 150000 |
-+---------------------+-----------------+----------------+----------------------+-------------------------------+--------+
+|---------------------|-----------------|----------------|----------------------|------------------------------|--------|
+| Autopartes Colombia | Juan Perez      |              1 | Filtro de aire       | Filtro de aire para motor    | 30000  |
+| Partes Automotrices | Luisa Gonzalez  |              1 | Correa de distribuci | Correa de distribución       | 80000  |
+| Equipos y Repuestos | Luis Ramirez    |              1 | Aceite de motor      | Aceite 10W-40                | 40000  |
+| Distribuidora Norte | Diego Lopez     |              1 | Llantas              | Llanta 195/65R15             | 200000 |
+| Repuestos y Más     | Carlos Gomez    |              1 | Pastillas de freno   | Pastillas de freno delanteras| 50000  |
+| Autorepuestos       | Juan Garcia     |              1 | Radiador             | Radiador de agua             | 250000 |
+| Partes y Piezas     | Laura Diaz      |              1 | Filtro de aceite     | Filtro de aceite             | 25000  |
+| Repuestos Express   | Sofia Jimenez   |              1 | Amortiguadores       | Amortiguadores delanteros    | 300000 |
+| Motorpartes         | Ana Torres      |              1 | Bujías               | Bujías para motor            | 20000  |
+| Repuestos del Sur   | Pedro Fernandez |              1 | Batería              | Batería de 12V               | 150000 |
+
+---
+
 ## 16. Listar los clientes que no han realizado reparaciones en el último año
 
 ```sql
@@ -456,12 +457,14 @@ RIGHT JOIN
 WHERE
     r.ReparaciónID IS NULL;
 ```
-+-----------+--------+-----------+---------------------+------------+-----------------------------+---------------------+----------------+
-| ClienteID | Nombre | Apellido  | Dirección          | Teléfono  | Email                       | tipo_identificacion | Identificación |
-+-----------+--------+-----------+---------------------+------------+-----------------------------+---------------------+----------------+
-|         8 | Luisa  | Fernandez | Carrera 60 #70-80   | 3179876541 | luisa.fernandez@example.com | CC                  |       66778899 |
-|         9 | Diego  | Jimenez   | Avenida 90 #100-110 | 3186543217 | diego.jimenez@example.com   | CC                  |       77889900 |
-+-----------+--------+-----------+---------------------+------------+-----------------------------+---------------------+----------------+
+
+| ClienteID | Nombre | Apellido  | Dirección          | Teléfono   | Email                       | tipo_identificacion | Identificación |
+|-----------|--------|-----------|--------------------|------------|----------------------------|---------------------|----------------|
+|         8 | Luisa  | Fernandez | Carrera 60 #70-80  | 3179876541 | luisa.fernandez@example.com | CC                  |       66778899 |
+|         9 | Diego  | Jimenez   | Avenida 90 #100-110| 3186543217 | diego.jimenez@example.com   | CC                  |       77889900 |
+
+---
+
 ## 17. Obtener las ganancias totales del taller en un período específico
 
 ```sql
@@ -476,13 +479,15 @@ INNER JOIN
 WHERE
     r.fecha BETWEEN '2024-01-10 ' AND '2024-08-24';
 ```
-+------------------+
-| GananciasTotales |
-+------------------+
-|          1150000 |
-+------------------+
 
-## 18. Listar los empleados y el total de horas trabajadas en reparaciones en un período específico (asumiendo que se registra la duración de cada reparación).
+| GananciasTotales |
+|------------------|
+|          1150000 |
+
+---
+
+## 18. Listar los empleados y el total de horas trabajadas en reparaciones en un período específico (asumiendo que se registra la duración de cada reparación)
+
 ```sql
 SELECT 
     e.EmpleadoID,
@@ -500,9 +505,9 @@ GROUP BY
 ORDER BY 
     TotalHorasTrabajadas DESC;
 ```
-+------------+--------+----------+----------------------+
+
 | EmpleadoID | Nombre | Apellido | TotalHorasTrabajadas |
-+------------+--------+----------+----------------------+
+|------------|--------|----------|----------------------|
 |         10 | Sofia  | Jimenez  |               7.7500 |
 |          5 | Juan   | Torres   |               4.0000 |
 |          4 | Laura  | Perez    |               3.0000 |
@@ -511,11 +516,12 @@ ORDER BY
 |          6 | Maria  | Diaz     |               1.7500 |
 |          1 | Carlos | Lopez    |               1.5000 |
 |          3 | Luis   | Gonzalez |               1.0000 |
-+------------+--------+----------+----------------------+
+
+---
 
 ## 19. Obtener el listado de servicios prestados por cada empleado en un período específico
-```sql
 
+```sql
 SELECT 
     e.EmpleadoID,
     e.Nombre,
@@ -530,13 +536,15 @@ INNER JOIN
 INNER JOIN 
     Servicios s ON r.ServicioID = s.ServicioID
 WHERE
-    r.Fecha BETWEEN '2024-01-01' AND '2024-12-31' 
+    r.Fecha BETWEEN '2024-01-01' AND '
+
+2024-12-31' 
 ORDER BY 
     e.EmpleadoID, r.Fecha;
 ```
-+------------+--------+----------+---------------------+---------------------+------------+
+
 | EmpleadoID | Nombre | Apellido | Servicio            | Fecha               | CostoTotal |
-+------------+--------+----------+---------------------+---------------------+------------+
+|------------|--------|----------|---------------------|---------------------|------------|
 |          1 | Carlos | Lopez    | Cambio de aceite    | 2024-01-10 00:00:00 | 50000      |
 |          2 | Ana    | Martinez | Alineación          | 2024-02-15 00:00:00 | 70000      |
 |          3 | Luis   | Gonzalez | Balanceo            | 2024-03-20 00:00:00 | 40000      |
@@ -547,4 +555,167 @@ ORDER BY
 |         10 | Sofia  | Jimenez  | Reparación de motor | 2024-08-14 00:00:00 | 500000     |
 |         10 | Sofia  | Jimenez  | Cambio de batería   | 2024-09-19 00:00:00 | 250000     |
 |         10 | Sofia  | Jimenez  | Lavado y engrase    | 2024-10-24 00:00:00 | 30000      |
-+------------+--------+----------+---------------------+---------------------+------------+
+---
+# *Subconsultas*
+
+## 1. Obtener el cliente que ha gastado más en reparaciones durante el último año.
+
+```sql
+SELECT 
+    c.ClienteID,
+    c.Nombre,
+    c.Apellido,
+    c.Dirección,
+    c.Teléfono,
+    c.Email,
+    MAX(total_gasto) AS TotalGastado
+FROM 
+    Clientes c
+INNER JOIN (
+    SELECT 
+        v.ClienteID,
+        SUM(r.CostoTotal) AS total_gasto
+    FROM 
+        Reparaciones r
+    INNER JOIN 
+        Vehículos v ON r.VehículoID = v.VehículoID
+    WHERE 
+        r.Fecha BETWEEN DATE_SUB(NOW(), INTERVAL 2 YEAR) AND NOW()
+    GROUP BY 
+        v.ClienteID
+) subquery ON c.ClienteID = subquery.ClienteID
+GROUP BY 
+    c.ClienteID
+ORDER BY 
+    TotalGastado DESC
+LIMIT 1;
+```
+
+| ClienteID | Nombre | Apellido | Dirección         | Teléfono   | Email                   | TotalGastado |
+|-----------|--------|----------|-------------------|------------|-------------------------|--------------|
+| 5         | Luis   | Torres   | Carrera 80 #10-20 | 3143216549 | luis.torres@example.com | 200000       |
+
+## 2. Obtener la pieza más utilizada en reparaciones durante el último mes
+
+```sql
+SELECT 
+    p.Nombre,
+    p.Descripción,
+    cantidad_usos as cantidad_usos_pieza
+FROM 
+    piezas p
+JOIN (
+    SELECT 
+        rp.PiezaID,
+        COUNT(rp.Cantidad) AS cantidad_usos
+    FROM 
+        reparacion_piezas rp
+) subquery ON p.PiezaID = subquery.PiezaID
+GROUP BY 
+    p.Nombre
+LIMIT 1;
+```
+
+| Nombre         | Descripción               | cantidad_usos_pieza |
+|----------------|---------------------------|---------------------|
+| Filtro de aire | Filtro de aire para motor | 8                   |
+
+## 3. Obtener los proveedores que suministran las piezas más caras
+
+```sql
+SELECT
+    p.Nombre,
+    p.Contacto,
+    p.Teléfono,
+    p.Email, 
+    valor_pieza as precio_pieza
+FROM 
+    proveedores AS p 
+JOIN (
+    SELECT 
+        pi.ProveedorID,
+        MAX(pi.Precio) AS valor_pieza
+    FROM 
+        piezas AS pi
+    GROUP BY
+        pi.ProveedorID
+) subquery ON p.ProveedorID = subquery.ProveedorID
+ORDER BY 
+    valor_pieza DESC
+LIMIT 5;
+```
+
+| Nombre              | Contacto        | Teléfono   | Email                           | precio_pieza |
+|---------------------|-----------------|------------|---------------------------------|--------------|
+| Repuestos Express   | Sofia Jimenez   | 3178889900 | info@repuestosexpress.com       | 300000       |
+| Autorepuestos       | Juan Garcia     | 3191112233 | ventas@autorepuestos.com        | 250000       |
+| Distribuidora Norte | Diego Lopez     | 3167778899 | ventas@distribuidoranorte.com   | 200000       |
+| Repuestos del Sur   | Pedro Fernandez | 3156667788 | info@repuestosdelsur.com        | 150000       |
+| Partes Automotrices | Luisa Gonzalez  | 3189991122 | contacto@partesautomotrices.com | 80000        |
+
+## 4. Listar las reparaciones que no utilizaron piezas específicas durante el último año
+
+```sql
+SELECT 
+    r.ReparaciónID, 
+    r.Fecha, 
+    r.VehículoID, 
+    r.EmpleadoID, 
+    r.ServicioID, 
+    r.CostoTotal, 
+    r.Descripción, 
+    r.duracion
+FROM 
+    Reparaciones r
+WHERE 
+    r.Fecha >= DATE_SUB(CURDATE(), INTERVAL 1 YEAR)
+    AND 
+    r.ReparaciónID NOT IN (
+        SELECT DISTINCT 
+            rp.ReparaciónID
+        FROM 
+            Reparacion_Piezas rp
+        WHERE 
+            rp.PiezaID IS NOT NULL
+    );
+```
+
+| ReparaciónID | Fecha               | VehículoID | EmpleadoID | ServicioID | CostoTotal | Descripción       | duracion  |
+|--------------|---------------------|------------|------------|------------|------------|-------------------|-----------|
+| 2            | 2024-02-15 00:00:00 | 2          | 2          | 2          | 70000      | Alineación        | 02:00:00  |
+| 3            | 2024-03-20 00:00:00 | 3          | 3          | 3          | 40000      | Balanceo          | 01:00:00  |
+| 5            | 2024-05-30 00:00:00 | 5          | 5          | 5          | 200000     | Revisión general  | 04:00:00  |
+| 9            | 2024-09-19 00:00:00 | 10         | 10         | 9          | 250000     | Cambio de batería | 01:15:00  |
+| 10           | 2024-10-24 00:00:00 | 10         | 10         | 10         | 30000      | Lavado y engrase  | 01:00:00  |
+
+## 5. Obtener las piezas que están en inventario por debajo del 10% del stock inicial
+
+```sql
+SELECT 
+    p.PiezaID, 
+    p.Nombre, 
+    p.Descripción, 
+    p.Precio, 
+    rp.StockInicial, 
+    i.Cantidad AS StockActual
+FROM 
+    Piezas p
+JOIN 
+    Inventario i ON p.PiezaID = i.PiezaID
+JOIN (
+    SELECT 
+        PiezaID, 
+        StockInicial
+    FROM 
+        Reparacion_Piezas
+    GROUP BY 
+        PiezaID, StockInicial
+) rp ON p.PiezaID = rp.PiezaID
+WHERE 
+    i.Cantidad < (0.10 * rp.StockInicial);
+```
+
+| PiezaID | Nombre          | Descripción   | Precio | StockInicial | StockActual |
+|---------|-----------------|---------------|--------|--------------|-------------|
+| 4       | Aceite de motor | Aceite 10W-40 | 40000  | 300          | 20          |
+---

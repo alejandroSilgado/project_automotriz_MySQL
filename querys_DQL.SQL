@@ -283,4 +283,132 @@ WHERE
 ORDER BY 
     e.EmpleadoID, r.Fecha;
     
+--------------------
+--- Subconsultas ---
+--------------------
 
+-- 1. Obtener el cliente que ha gastado más en reparaciones durante el último año.
+SELECT 
+    c.ClienteID,
+    c.Nombre,
+    c.Apellido,
+    c.Dirección,
+    c.Teléfono,
+    c.Email,
+    MAX(total_gasto) AS TotalGastado
+FROM 
+    Clientes c
+INNER JOIN (
+    SELECT 
+        v.ClienteID,
+        SUM(r.CostoTotal) AS total_gasto
+    FROM 
+        Reparaciones r
+    INNER JOIN 
+        Vehículos v ON r.VehículoID = v.VehículoID
+    WHERE 
+        r.Fecha BETWEEN DATE_SUB(NOW(), INTERVAL 2 YEAR) AND NOW()
+    GROUP BY 
+        v.ClienteID
+) subquery ON c.ClienteID = subquery.ClienteID
+GROUP BY 
+    c.ClienteID
+ORDER BY 
+    TotalGastado DESC
+LIMIT 1;
+
+
+-- 2. Obtener la pieza más utilizada en reparaciones durante el último mes
+
+SELECT 
+	p.Nombre,
+	p.Descripción,
+    cantidad_usos as cantidad_usos_pieza
+FROM 
+	piezas p
+JOIN (
+	SELECT 
+		rp.PiezaID,
+        COUNT(rp.Cantidad) AS cantidad_usos
+	FROM 
+		reparacion_piezas rp
+
+)subquery ON p.PiezaID = subquery.PiezaID
+GROUP BY 
+	p.Nombre
+LIMIT 1;
+
+
+
+-- 3. Obtener los proveedores que suministran las piezas más caras
+SELECT
+    p.Nombre,
+    p.Contacto,
+    p.Teléfono,
+    p.Email, 
+	valor_pieza as precio_pieza
+FROM 
+    proveedores AS p 
+JOIN (
+    SELECT 
+        pi.ProveedorID,
+        MAX(pi.Precio) AS valor_pieza
+    FROM 
+        piezas AS pi
+    GROUP BY
+        pi.ProveedorID
+) subquery ON p.ProveedorID = subquery.ProveedorID
+ORDER BY 
+    valor_pieza DESC
+LIMIT 5;
+
+
+-- 4. Listar las reparaciones que no utilizaron piezas específicas durante el último año
+
+SELECT 
+    r.ReparaciónID, 
+    r.Fecha, 
+    r.VehículoID, 
+    r.EmpleadoID, 
+    r.ServicioID, 
+    r.CostoTotal, 
+    r.Descripción, 
+    r.duracion
+FROM 
+    Reparaciones r
+WHERE 
+    r.Fecha >= DATE_SUB(CURDATE(), INTERVAL 1 YEAR)
+    AND 
+    r.ReparaciónID NOT IN (
+        SELECT DISTINCT 
+			rp.ReparaciónID
+        FROM 
+			Reparacion_Piezas rp
+        WHERE 
+			rp.PiezaID IS NOT NULL
+    );
+
+-- 5. Obtener las piezas que están en inventario por debajo del 10% del stock inicial
+
+SELECT 
+	p.PiezaID, 
+	p.Nombre, 
+	p.Descripción, 
+    p.Precio, 
+    rp.StockInicial, 
+    i.Cantidad AS StockActual
+FROM 
+	Piezas p
+JOIN 
+	Inventario i ON p.PiezaID = i.PiezaID
+JOIN (
+    SELECT 
+		PiezaID, 
+		StockInicial
+    FROM 
+		Reparacion_Piezas
+    GROUP BY 
+		PiezaID, StockInicial
+) rp ON p.PiezaID = rp.PiezaID
+WHERE 
+	i.Cantidad < (0.10 * rp.StockInicial);

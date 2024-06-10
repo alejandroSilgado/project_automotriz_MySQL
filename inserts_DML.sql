@@ -182,19 +182,15 @@ INSERT INTO Reparaciones (ReparaciónID, Fecha, VehículoID, EmpleadoID, Servici
 (9, '2024-09-19', 10, 10, 9, '250000', 'Cambio de batería', '01:15:00'),
 (10, '2024-10-24', 10, 10, 10, '30000', 'Lavado y engrase', '01:00:00');
 
-
--- Insert data into Reparacion_Piezas
-INSERT INTO Reparacion_Piezas (ReparaciónID, PiezaID, Cantidad) VALUES 
-(1, 1, 1),
-(2, 2, 2),
-(3, 3, 3),
-(4, 4, 4),
-(5, 5, 5),
-(6, 6, 6),
-(7, 7, 7),
-(8, 8, 8),
-(9, 9, 9),
-(10, 10, 10);
+INSERT INTO Reparacion_Piezas (ReparaciónID, PiezaID, Cantidad, StockInicial, StockActual) VALUES
+(1, 1, 5, 100, 15),
+(2, NULL, 0, 200, 20),
+(3, NULL, 0, 100, 15),
+(4, 3, 1, 150, 5),
+(5, NULL, 0, 200, 20),
+(6, 3, 1, 150, 5),
+(7, 1, 6, 100, 15),
+(8, 4, 2, 300, 25);
 
 -- Insert data into Citas
 INSERT INTO Citas (CitaID, FechaHora, VehículoID, ServicioID, ClienteID) VALUES 

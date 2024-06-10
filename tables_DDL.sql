@@ -70,13 +70,11 @@ CREATE TABLE Servicios (
     Costo INT
 );
 
-
-
 CREATE TABLE Piezas (
     PiezaID INT PRIMARY KEY,
     Nombre VARCHAR(20),
     Descripción VARCHAR(50),
-    Precio VARCHAR(50),
+    Precio DOUBLE,
     ProveedorID INT,
     FOREIGN KEY (ProveedorID) REFERENCES Proveedores(ProveedorID)
 );
@@ -138,6 +136,8 @@ CREATE TABLE Reparacion_Piezas (
     ReparaciónID INT,
     PiezaID INT,
     Cantidad INT,
+	StockInicial INT,
+    StockActual INT,
     FOREIGN KEY (ReparaciónID) REFERENCES Reparaciones(ReparaciónID),
     FOREIGN KEY (PiezaID) REFERENCES Piezas(PiezaID)
 );

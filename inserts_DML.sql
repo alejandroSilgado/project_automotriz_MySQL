@@ -105,17 +105,17 @@ INSERT INTO Zona (ZonaID, Entrepiso, Fila, Columna, Nombre) VALUES
 (10, 3, 1, 2, 'Zona J');
 
 -- Insert data into Vehiculos
-INSERT INTO Vehículos (VehículoID, Placa, MarcaID, Modelo, Año, ClienteID) VALUES 
-(1, 'ABC123', 1, 'Spark GT', '2015-01-01', 1),
-(2, 'DEF456', 2, 'Sandero', '2018-01-01', 2),
-(3, 'GHI789', 3, 'Mazda 3', '2020-01-01', 3),
-(4, 'JKL012', 4, 'Corolla', '2017-01-01', 4),
-(5, 'MNO345', 5, 'Versa', '2019-01-01', 5),
-(6, 'PQR678', 6, 'Escape', '2016-01-01', 6),
-(7, 'STU901', 7, 'Sportage', '2021-01-01', 7),
-(8, 'VWX234', 8, 'Tucson', '2018-01-01', 8),
-(9, 'YZA567', 9, 'Jetta', '2019-01-01', 9),
-(10, 'BCD890', 10, 'Civic', '2020-01-01', 10);
+INSERT INTO Vehículos (Placa, MarcaID, Modelo, Año, Kilometraje, ClienteID) VALUES 
+('ABC123', 1, 'Spark GT', '2015-01-01', 15000, 1),
+('DEF456', 2, 'Sandero', '2018-01-01', 8000, 2),
+('GHI789', 3, 'Mazda 3', '2020-01-01', 20000, 3),
+('JKL012', 4, 'Corolla', '2017-01-01', 12000, 4),
+('MNO345', 5, 'Versa', '2019-01-01', 5000, 5),
+('PQR678', 6, 'Escape', '2016-01-01', 18000, 6),
+('STU901', 7, 'Sportage', '2021-01-01', 3000, 7),
+('VWX234', 8, 'Tucson', '2018-01-01', 14000, 8),
+('YZA567', 9, 'Jetta', '2019-01-01', 9000, 9),
+('BCD890', 10, 'Civic', '2020-01-01', 7000, 10);
 
 -- Insert data into Piezas
 INSERT INTO Piezas (PiezaID, Nombre, Descripción, Precio, ProveedorID) VALUES 

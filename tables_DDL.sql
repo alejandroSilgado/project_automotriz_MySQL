@@ -2,31 +2,31 @@ CREATE DATABASE proyecto_mysql;
 USE proyecto_mysql;
 
 CREATE TABLE Marca (
-    MarcaID INT PRIMARY KEY,
+    MarcaID INT PRIMARY KEY AUTO_INCREMENT,
     Nombre VARCHAR(40) NOT NULL
 );
 
 CREATE TABLE Zona (
-    ZonaID INT PRIMARY KEY,
+    ZonaID INT PRIMARY KEY AUTO_INCREMENT,
     Entrepiso INT,
     Fila INT,
     Columna INT,
     Nombre VARCHAR(40) NOT NULL
 );
 CREATE TABLE Region (
-    regionID INT PRIMARY KEY,
+    regionID INT PRIMARY KEY AUTO_INCREMENT,
     Nombre VARCHAR(40) NOT NULL
 );
 
 CREATE TABLE Ciudad (
-    ciudadID INT PRIMARY KEY,
+    ciudadID INT PRIMARY KEY AUTO_INCREMENT,
     Nombre VARCHAR(40) NOT NULL,
     regionID INT,
     FOREIGN KEY (regionID) REFERENCES Region(regionID)
 );
 
 CREATE TABLE Clientes (
-    ClienteID INT PRIMARY KEY,
+    ClienteID INT PRIMARY KEY AUTO_INCREMENT,
     Nombre VARCHAR(40) NOT NULL,
     Apellido VARCHAR(40) NOT NULL,
     Dirección VARCHAR(50),
@@ -37,7 +37,7 @@ CREATE TABLE Clientes (
 );
 
 CREATE TABLE Empleados (
-    EmpleadoID INT PRIMARY KEY,
+    EmpleadoID INT PRIMARY KEY AUTO_INCREMENT,
     Nombre VARCHAR(40) NOT NULL,
     Apellido VARCHAR(40) NOT NULL,
     Cargo VARCHAR(50),
@@ -45,7 +45,7 @@ CREATE TABLE Empleados (
 );
 
 CREATE TABLE Proveedores (
-    ProveedorID INT PRIMARY KEY,
+    ProveedorID INT PRIMARY KEY AUTO_INCREMENT,
     Nombre VARCHAR(40) NOT NULL,
     Contacto VARCHAR(50),
     Teléfono VARCHAR(20),
@@ -53,25 +53,27 @@ CREATE TABLE Proveedores (
 );
 
 CREATE TABLE Vehículos (
-    VehículoID INT PRIMARY KEY,
+    VehículoID INT PRIMARY KEY AUTO_INCREMENT,
     Placa VARCHAR(20),
     MarcaID INT,
     Modelo VARCHAR(50),
     Año DATETIME,
+    Kilometraje INT,
     ClienteID INT,
     FOREIGN KEY (MarcaID) REFERENCES Marca(MarcaID),
     FOREIGN KEY (ClienteID) REFERENCES Clientes(ClienteID)
 );
 
+
 CREATE TABLE Servicios (
-    ServicioID INT PRIMARY KEY,
+    ServicioID INT PRIMARY KEY AUTO_INCREMENT,
     Nombre VARCHAR(50),
     Descripción TEXT,
-    Costo INT
+    Costo DOUBLE
 );
 
 CREATE TABLE Piezas (
-    PiezaID INT PRIMARY KEY,
+    PiezaID INT PRIMARY KEY AUTO_INCREMENT,
     Nombre VARCHAR(20),
     Descripción VARCHAR(50),
     Precio DOUBLE,
@@ -80,17 +82,17 @@ CREATE TABLE Piezas (
 );
 
 CREATE TABLE Ordenes_Compras (
-    OrdenID INT PRIMARY KEY,
-    Fecha DATETIME,
+    OrdenID INT PRIMARY KEY AUTO_INCREMENT,
+    Fecha DATE,
     ProveedorID INT,
     EmpleadoID INT,
-    total VARCHAR(50),
+    total DOUBLE,
     FOREIGN KEY (ProveedorID) REFERENCES Proveedores(ProveedorID),
     FOREIGN KEY (EmpleadoID) REFERENCES Empleados(EmpleadoID)
 );
 
 CREATE TABLE Inventario (
-    InventarioID INT PRIMARY KEY,
+    InventarioID INT PRIMARY KEY AUTO_INCREMENT,
     PiezaID INT,
     Cantidad INT,
     ZonaID INT,
@@ -110,12 +112,12 @@ CREATE TABLE Orden_detalles (
 );
 
 CREATE TABLE Reparaciones (
-    ReparaciónID INT PRIMARY KEY,
+    ReparaciónID INT PRIMARY KEY AUTO_INCREMENT,
     Fecha DATETIME,
     VehículoID INT,
     EmpleadoID INT,
     ServicioID INT,
-    CostoTotal VARCHAR(50),
+    CostoTotal DOUBLE,
     Descripción VARCHAR(50),
     duracion TIME,
     FOREIGN KEY (VehículoID) REFERENCES Vehículos(VehículoID),
@@ -123,7 +125,7 @@ CREATE TABLE Reparaciones (
     FOREIGN KEY (ServicioID) REFERENCES Servicios(ServicioID)
 );
 CREATE TABLE Taller (
-    TallerID INT PRIMARY KEY,
+    TallerID INT PRIMARY KEY AUTO_INCREMENT,
     Nombre VARCHAR(40),
     ciudadID INT,
     EmpleadoID INT,
@@ -143,7 +145,7 @@ CREATE TABLE Reparacion_Piezas (
 );
 
 CREATE TABLE Citas (
-    CitaID INT PRIMARY KEY,
+    CitaID INT PRIMARY KEY AUTO_INCREMENT,
     FechaHora DATETIME,
     VehículoID INT,
     ServicioID INT,
@@ -154,10 +156,10 @@ CREATE TABLE Citas (
 );
 
 CREATE TABLE Facturacion (
-    FacturaID INT PRIMARY KEY,
-    Fecha DATETIME,
+    FacturaID INT PRIMARY KEY AUTO_INCREMENT,
+    Fecha DATE,
     ClienteID INT,
-    Total VARCHAR(50),
+    Total DOUBLE,
     FOREIGN KEY (ClienteID) REFERENCES Clientes(ClienteID)
 );
 
@@ -165,7 +167,7 @@ CREATE TABLE Factura_Detalles (
     FacturaID INT,
     ReparaciónID INT,
     ClienteID INT,
-    Total VARCHAR(50),
+    Total DOUBLE,
     FOREIGN KEY (FacturaID) REFERENCES Facturacion(FacturaID),
     FOREIGN KEY (ReparaciónID) REFERENCES Reparaciones(ReparaciónID),
     FOREIGN KEY (ClienteID) REFERENCES Clientes(ClienteID)

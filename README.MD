@@ -1,6 +1,6 @@
+---
 
 # *Consultas de Reparaciones y Servicios de Vehículos*
-
 
 ## 1. Obtener el historial de reparaciones de un vehículo específico
 
@@ -719,3 +719,291 @@ WHERE
 |---------|-----------------|---------------|--------|--------------|-------------|
 | 4       | Aceite de motor | Aceite 10W-40 | 40000  | 300          | 20          |
 ---
+
+
+# *Procedimientos Almacenados*
+
+## 1. Crear un procedimiento almacenado para insertar una nueva reparación.
+
+```sql
+DELIMITER $$
+
+CREATE PROCEDURE crear_nueva_reparacion (
+    IN p_Fecha DATETIME,
+    IN p_VehículoID INT,
+    IN p_EmpleadoID INT,
+    IN p_ServicioID INT,
+    IN p_CostoTotal DECIMAL(10, 2),
+    IN p_Descripción VARCHAR(255),
+    IN p_duracion TIME
+)
+BEGIN
+    INSERT INTO Reparaciones (Fecha, VehículoID, EmpleadoID, ServicioID, CostoTotal, Descripción, duracion)
+    VALUES (p_Fecha, p_VehículoID, p_EmpleadoID, p_ServicioID, p_CostoTotal, p_Descripción, p_duracion);
+END$$
+
+DELIMITER ;
+
+CALL crear_nueva_reparacion('2024-06-10 12:00:00', 1, 1, 1, 150.00, 'Cambio de aceite', '01:30:00');
+```
+
+## 2. Crear un procedimiento almacenado para actualizar el inventario de una pieza.
+
+```sql
+DELIMITER $$
+
+CREATE PROCEDURE actualizar_inventario_pieza (
+    IN p_InventarioID INT,
+    IN P_PiezaID INT,
+    IN P_Cantidad INT,
+    IN P_ZonaID INT
+)
+BEGIN
+    DECLARE existing_count INT;
+    DECLARE msg VARCHAR(255);
+
+    SELECT COUNT(*) INTO existing_count 
+    FROM Inventario 
+    WHERE PiezaID = P_PiezaID AND ZonaID = P_ZonaID;
+    
+    IF existing_count > 0 THEN
+        UPDATE Inventario 
+        SET Cantidad = Cantidad + P_Cantidad 
+        WHERE PiezaID = P_PiezaID AND ZonaID = P_ZonaID;
+        
+        SET msg = 'No se pudo actualizar el inventario';
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = msg;    
+    ELSE
+        INSERT INTO Inventario (InventarioID, PiezaID, Cantidad, ZonaID)  
+        VALUES (p_InventarioID, P_PiezaID, P_Cantidad, P_ZonaID);
+        
+        SET msg = 'Se ingreso actualizo correctamente el inventario';
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = msg;    
+    END IF;
+END$$
+DELIMITER ;
+
+CALL actualizar_inventario_pieza(11, 10, 90, 1);
+```
+
+## 3. Crear un procedimiento almacenado para eliminar una cita
+
+```sql
+DELIMITER $$
+CREATE PROCEDURE eliminar_cita(
+    IN CitaID_entrada INT
+)
+BEGIN
+    DECLARE msg VARCHAR(255);
+
+    IF NOT EXISTS (SELECT 1 FROM Citas WHERE CitaID = CitaID_entrada) THEN
+        SET msg = CONCAT('El ID ingresado no existe: ', CitaID_entrada);
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = msg;
+    ELSE
+        DELETE FROM Citas WHERE CitaID = CitaID_entrada;
+        SET msg = CONCAT('Se borró la cita correctamente: ', CitaID_entrada);
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = msg;
+    END IF;
+END$$
+DELIMITER ;
+
+CALL eliminar_cita(2); 
+```
+
+## 4. Crear un procedimiento almacenado para generar una factura
+
+```sql
+DELIMITER $$
+CREATE PROCEDURE generar_factura(
+    IN p_Fecha DATE,
+    IN p_ClienteID INT,
+    IN p_Total DOUBLE
+)
+BEGIN
+    DECLARE msg VARCHAR(255);
+    
+    INSERT INTO Facturacion (Fecha, ClienteID, Total) 
+    VALUES(p_Fecha,p_ClienteID,p_Total);
+	
+END$$
+DELIMITER ;
+
+CALL generar_factura ('2024-12-11', 3, 445000);
+```
+
+## 5. Crear un procedimiento almacenado para obtener el historial de reparaciones de un vehículo
+
+```sql
+DELIMITER $$
+CREATE PROCEDURE historial_reparaciones_vehiculo (
+    IN p_VehículoID INT  
+)
+BEGIN
+    DECLARE msg varchar(255);
+    
+    IF NOT EXISTS (SELECT 1 FROM Reparaciones WHERE VehículoID = p_VehículoID) THEN
+        SET msg = CONCAT('El ID ingresado no existe: ', p_VehículoID);
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = msg;
+    ELSE
+        SELECT 
+            r.* 
+        FROM 
+            Reparaciones as R 
+        WHERE 
+            VehículoID = p_VehículoID;
+        SET msg = CONCAT('Se borró la cita correctamente: ', p_VehículoID);
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = msg;
+    END IF;
+END$$
+DELIMITER ;
+
+CALL historial_reparaciones_vehiculo (4);
+```
+
+## 6. Crear un procedimiento almacenado para calcular el costo total de reparaciones de un cliente en un período
+
+```sql
+DELIMITER $$
+
+CREATE PROCEDURE costoTotal_reparaciones (
+    IN p_Nombre VARCHAR(40),
+    IN p_Apellido VARCHAR(40),
+    IN p_PeriodoInicio DATE,
+    IN p_PeriodoFin DATE
+)
+BEGIN
+    DECLARE msg VARCHAR(255);
+    DECLARE total_cost DECIMAL(10, 2);
+
+    IF NOT EXISTS (SELECT 1 FROM clientes WHERE Nombre = p_Nombre AND Apellido = p_Apellido) THEN
+        SET msg = CONCAT('El cliente con el nombre: ', p_Nombre, ' ', p_Apellido, ' no existe en la base de datos.');
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = msg;
+    ELSE
+        SELECT SUM(r.CostoTotal) INTO total_cost
+        FROM reparaciones r
+        JOIN vehículos v ON r.VehículoID = v.VehículoID
+        JOIN clientes c ON v.ClienteID = c.ClienteID
+        WHERE c.Nombre = p_Nombre 
+        AND c.Apellido = p_Apellido
+        AND r.Fecha BETWEEN p_PeriodoInicio AND p_PeriodoFin;
+        
+        SELECT total_cost AS CostoTotal;
+    END IF;
+
+END$$
+
+DELIMITER ;
+
+CALL costoTotal_reparaciones ('Sofia', 'Rojas','2024-01-10','2024-10-24');
+```
+
+## 7. Crear un procedimiento almacenado para obtener la lista de vehículos que requieren mantenimiento basado en el kilometraje.
+
+```sql
+DELIMITER $$
+
+CREATE PROCEDURE obtener_vehiculos_mantenimiento (
+    IN p_UmbralKilometraje INT
+)
+BEGIN
+    SELECT v.VehículoID, v.Placa, m.Nombre AS Marca, v.Modelo, v.Año, v.Kilometraje, c.Nombre AS ClienteNombre, c.Apellido AS ClienteApellido
+    FROM Vehículos v
+    JOIN Marca m ON v.MarcaID = m.MarcaID
+    JOIN Clientes c ON v.ClienteID = c.ClienteID
+    WHERE v.Kilometraje >= p_UmbralKilometraje;
+END$$
+
+DELIMITER ;
+
+CALL obtener_vehiculos_mantenimiento(10000);
+```
+
+## 8. Crear un procedimiento almacenado para insertar una nueva orden de compra
+
+```sql
+DELIMITER $$
+
+CREATE PROCEDURE insertar_orden_compra (
+    IN p_Fecha DATE,
+    IN p_ProveedorID INT,
+    IN p_EmpleadoID INT,
+    IN p_Total DOUBLE
+)
+BEGIN
+    
+    IF NOT EXISTS (SELECT 1 FROM Proveedores WHERE ProveedorID = p_ProveedorID) THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'El proveedor no existe.';
+    END IF;
+    
+    IF NOT EXISTS (SELECT 1 FROM Empleados WHERE EmpleadoID = p_EmpleadoID) THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'El empleado no existe.';
+    END IF;
+    
+    INSERT INTO Ordenes_Compras (Fecha, ProveedorID, EmpleadoID, Total)
+    VALUES (p_Fecha, p_ProveedorID, p_EmpleadoID, p_Total);
+    
+END $$
+
+DELIMITER ;
+
+CALL insertar_orden_compra('2024-06-10',1, 2,1500.00);
+```
+
+## 9. Crear un procedimiento almacenado para actualizar los datos de un cliente
+
+```sql
+DELIMITER $$
+
+CREATE PROCEDURE actualizar_datos_cliente (
+    IN p_ClienteID INT,
+    IN p_Nombre VARCHAR(50),
+    IN p_Apellido VARCHAR(50),
+    IN p_Email VARCHAR(100),
+    IN p_Telefono VARCHAR(20),
+    IN p_Direccion VARCHAR(255)
+)
+BEGIN
+    IF NOT EXISTS (SELECT 1 FROM Clientes WHERE ClienteID = p_ClienteID) THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'El cliente no existe.';
+    END IF;
+
+    UPDATE Clientes
+    SET 
+        Nombre = p_Nombre,
+        Apellido = p_Apellido,
+        Email = p_Email,
+        Teléfono = p_Telefono,
+        Dirección = p_Direccion
+    WHERE 
+        ClienteID = p_ClienteID;
+END $$
+
+DELIMITER ;
+
+CALL actualizar_datos_cliente(1,  'Juan', 'Pérez', 'juan.perez@example.com', '555-1234', 'Calle Falsa 123');
+```
+
+## 10. Crear un procedimiento almacenado para obtener los servicios más solicitados en un período
+
+```sql
+DELIMITER $$
+
+CREATE PROCEDURE obtener_servicios_mas_solicitados (
+    IN p_PeriodoInicio DATE,
+    IN p_Periodo
+
+Fin DATE
+)
+BEGIN
+    SELECT s.Nombre AS Servicio, COUNT(*) AS CantidadSolicitada
+    FROM Citas c
+    JOIN Servicios s ON c.ServicioID = s.ServicioID
+    WHERE c.FechaHora BETWEEN p_PeriodoInicio AND p_PeriodoFin
+    GROUP BY s.ServicioID
+    ORDER BY CantidadSolicitada DESC;
+END $$
+
+DELIMITER ;
+
+CALL obtener_servicios_mas_solicitados('2024-01-01', '2024-12-31');
+```

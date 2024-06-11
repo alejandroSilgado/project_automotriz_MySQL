@@ -71,8 +71,21 @@ WHERE
     
 -- 6. Generar una factura para un cliente específico en una fecha determinada
 
--- preguntar sobre este punto 
-
+SELECT 
+    f.FacturaID,
+    f.Fecha,
+    f.ClienteID,
+    c.Nombre AS NombreCliente,
+    c.Apellido AS ApellidoCliente,
+    f.Total
+FROM 
+    Facturacion f
+INNER JOIN 
+    Clientes c ON f.ClienteID = c.ClienteID
+WHERE 
+    c.ClienteID = '1'
+    AND DATE(f.Fecha) = '2024-01-01 00:00:00';
+    
 -- 7. Listar todas las órdenes de compra y sus detalles
  
 SELECT 
@@ -182,7 +195,7 @@ SELECT
 FROM 
     Reparaciones r
 INNER JOIN 
-    Reparacion_Piezas rp ON r.ReparacionID = rp.ReparacionID
+    Reparacion_Piezas rp ON r.ReparaciónID = rp.ReparaciónID
 INNER JOIN 
     Piezas p ON rp.PiezaID = p.PiezaID
 WHERE
@@ -220,6 +233,7 @@ GROUP BY
     e.ProveedorID, e.Nombre, e.Contacto
 ORDER BY 
     CantidadPiezas DESC;
+    
 -- 16. Listar los clientes que no han realizado reparaciones en el último año
 SELECT 
     c.*

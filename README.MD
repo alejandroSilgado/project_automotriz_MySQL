@@ -1,5 +1,3 @@
----
-
 # *Consultas de Reparaciones y Servicios de Vehículos*
 
 ## 1. Obtener el historial de reparaciones de un vehículo específico

@@ -204,7 +204,8 @@ GROUP BY
 
 | ReparaciónID | CostoTotalPiezas |
 |--------------|------------------|
-|            1 |            30000 |
+|            1 |           150000 |
+
 
 ---
 
@@ -258,14 +259,17 @@ ORDER BY
 
 | ServicioID | Nombre              | Solicitudes |
 |------------|---------------------|-------------|
-|          4 | Cambio de frenos    |           3 |
+|          2 | Alineación          |           1 |
 |          8 | Reparación de motor |           1 |
+|          1 | Cambio de aceite    |           1 |
 |          7 | Cambio de filtros   |           1 |
 |          6 | Cambio de bujías    |           1 |
 |          5 | Revisión general    |           1 |
+|          4 | Cambio de frenos    |           1 |
 |         10 | Lavado y engrase    |           1 |
-|          1 | Cambio de aceite    |           1 |
+|          3 | Balanceo            |           1 |
 |          9 | Cambio de batería   |           1 |
+
 
 ---
 
@@ -291,18 +295,18 @@ ORDER BY
     CostoTotalReparaciones DESC;
 ```
 
-| ClienteID | Nombre | Apellido  | CostoTotalReparaciones |
-|-----------|--------|-----------|------------------------|
-|         8 | Luisa  | Fernandez |                 500000 |
-|         9 | Diego  | Jimenez   |                 250000 |
-|         5 | Luis   | Torres    |                 200000 |
-|         2 | Maria  | Gomez     |                 150000 |
-|         3 | Carlos | Lopez     |                 150000 |
-|         4 | Ana    | Martinez  |                 150000 |
-|         7 | Pedro  | Diaz      |                  80000 |
-|         6 | Laura  | Ramirez   |                  60000 |
-|         1 | Juan   | Perez     |                  50000 |
-|        10 | Sofia  | Rojas     |                  30000 |
+
+| ClienteID | Nombre | Apellido | CostoTotalReparaciones |
+|-----------|--------|----------|------------------------|
+|        10 | Sofia  | Rojas    |                 780000 |
+|         5 | Luis   | Torres   |                 200000 |
+|         4 | Ana    | Martinez |                 150000 |
+|         7 | Pedro  | Diaz     |                  80000 |
+|         2 | Maria  | Gomez    |                  70000 |
+|         6 | Laura  | Ramirez  |                  60000 |
+|         1 | Juan   | Perez    |                  50000 |
+|         3 | Carlos | Lopez    |                  40000 |
+
 
 ---
 ---
@@ -327,18 +331,18 @@ ORDER BY
     CantidadReparaciones DESC;
 ```
 
-| EmpleadoID | Nombre | Apellido  | CantidadReparaciones |
-|------------|--------|-----------|----------------------|
-|          5 | Juan   | Torres    |                    1 |
-|          2 | Ana    | Martinez  |                    1 |
-|          9 | Diego  | Ramirez   |                    1 |
-|          6 | Maria  | Diaz      |                    1 |
-|          3 | Luis   | Gonzalez  |                    1 |
-|         10 | Sofia  | Jimenez   |                    1 |
-|          7 | Pedro  | Garcia    |                    1 |
-|          4 | Laura  | Perez     |                    1 |
-|          1 | Carlos | Lopez     |                    1 |
-|          8 | Luisa  | Fernandez |                    1 |
+
+| EmpleadoID | Nombre | Apellido | CantidadReparaciones |
+|------------|--------|----------|----------------------|
+|         10 | Sofia  | Jimenez  |                    3 |
+|          7 | Pedro  | Garcia   |                    1 |
+|          4 | Laura  | Perez    |                    1 |
+|          1 | Carlos | Lopez    |                    1 |
+|          5 | Juan   | Torres   |                    1 |
+|          2 | Ana    | Martinez |                    1 |
+|          6 | Maria  | Diaz     |                    1 |
+|          3 | Luis   | Gonzalez |                    1 |
+
 
 ---
 
@@ -362,18 +366,11 @@ ORDER BY
     TotalUso DESC;
 ```
 
-| Pieza                | TotalUso |
-|----------------------|----------|
-| Radiador             |       10 |
-| Correa de distribuci |        9 |
-| Amortiguadores       |        8 |
-| Llantas              |        7 |
-| Batería              |        6 |
-| Filtro de aceite     |        5 |
-| Aceite de motor      |        4 |
-| Bujías               |        3 |
-| Pastillas de freno   |        2 |
-| Filtro de aire       |        1 |
+| Pieza           | TotalUso |
+|-----------------|----------|
+| Filtro de aire  |       11 |
+| Aceite de motor |        2 |
+| Bujías          |        2 |
 
 ---
 
@@ -426,18 +423,19 @@ ORDER BY
     CantidadPiezas DESC;
 ```
 
-| Nombre              | Contacto        | CantidadPiezas | Nombre               | Descripción                  | Precio |
-|---------------------|-----------------|----------------|----------------------|------------------------------|--------|
-| Autopartes Colombia | Juan Perez      |              1 | Filtro de aire       | Filtro de aire para motor    | 30000  |
-| Partes Automotrices | Luisa Gonzalez  |              1 | Correa de distribuci | Correa de distribución       | 80000  |
-| Equipos y Repuestos | Luis Ramirez    |              1 | Aceite de motor      | Aceite 10W-40                | 40000  |
-| Distribuidora Norte | Diego Lopez     |              1 | Llantas              | Llanta 195/65R15             | 200000 |
-| Repuestos y Más     | Carlos Gomez    |              1 | Pastillas de freno   | Pastillas de freno delanteras| 50000  |
-| Autorepuestos       | Juan Garcia     |              1 | Radiador             | Radiador de agua             | 250000 |
-| Partes y Piezas     | Laura Diaz      |              1 | Filtro de aceite     | Filtro de aceite             | 25000  |
-| Repuestos Express   | Sofia Jimenez   |              1 | Amortiguadores       | Amortiguadores delanteros    | 300000 |
-| Motorpartes         | Ana Torres      |              1 | Bujías               | Bujías para motor            | 20000  |
-| Repuestos del Sur   | Pedro Fernandez |              1 | Batería              | Batería de 12V               | 150000 |
+| Nombre              | Contacto        | CantidadPiezas | Nombre               | Descripción                   | Precio |
+|---------------------|-----------------|----------------|----------------------|-------------------------------|--------|
+| Equipos y Repuestos | Luis Ramirez    |              1 | Aceite de motor      | Aceite 10W-40                 |  40000 |
+| Autopartes Colombia | Juan Perez      |              1 | Filtro de aire       | Filtro de aire para motor     |  30000 |
+| Partes Automotrices | Luisa Gonzalez  |              1 | Correa de distribuci | Correa de distribución        |  80000 |
+| Repuestos del Sur   | Pedro Fernandez |              1 | Batería              | Batería de 12V                | 150000 |
+| Motorpartes         | Ana Torres      |              1 | Bujías               | Bujías para motor             |  20000 |
+| Repuestos Express   | Sofia Jimenez   |              1 | Amortiguadores       | Amortiguadores delanteros     | 300000 |
+| Partes y Piezas     | Laura Diaz      |              1 | Filtro de aceite     | Filtro de aceite              |  25000 |
+| Repuestos y Más     | Carlos Gomez    |              1 | Pastillas de freno   | Pastillas de freno delanteras |  50000 |
+| Autorepuestos       | Juan Garcia     |              1 | Radiador             | Radiador de agua              | 250000 |
+| Distribuidora Norte | Diego Lopez     |              1 | Llantas              | Llanta 195/65R15              | 200000 |
+
 
 ---
 
@@ -534,9 +532,7 @@ INNER JOIN
 INNER JOIN 
     Servicios s ON r.ServicioID = s.ServicioID
 WHERE
-    r.Fecha BETWEEN '2024-01-01' AND '
-
-2024-12-31' 
+    r.Fecha BETWEEN '2024-01-01' AND '2024-12-31' 
 ORDER BY 
     e.EmpleadoID, r.Fecha;
 ```

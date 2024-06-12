@@ -41,7 +41,7 @@ CREATE TABLE Empleados (
     Nombre VARCHAR(40) NOT NULL,
     Apellido VARCHAR(40) NOT NULL,
     Cargo VARCHAR(50),
-    Telefono INT
+    Telefono  VARCHAR(20)
 );
 
 CREATE TABLE Proveedores (
@@ -74,7 +74,7 @@ CREATE TABLE Servicios (
 
 CREATE TABLE Piezas (
     PiezaID INT PRIMARY KEY AUTO_INCREMENT,
-    Nombre VARCHAR(20),
+    Nombre VARCHAR(50),
     Descripción VARCHAR(50),
     Precio DOUBLE,
     ProveedorID INT,
@@ -172,7 +172,7 @@ CREATE TABLE Factura_Detalles (
     FOREIGN KEY (ReparaciónID) REFERENCES Reparaciones(ReparaciónID),
     FOREIGN KEY (ClienteID) REFERENCES Clientes(ClienteID)
 );
--- Create telephone tables last
+
 CREATE TABLE telefono_cliente (
     Tipo ENUM('Fijo', 'Movil'),
     Numero VARCHAR(20),

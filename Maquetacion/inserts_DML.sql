@@ -220,16 +220,16 @@ INSERT INTO Facturacion (FacturaID, Fecha, ClienteID, Total) VALUES
 
 -- Insert data into Factura_Detalles
 INSERT INTO Factura_Detalles (FacturaID, ReparaciónID, ClienteID, Total) VALUES 
-(1, 1, 1, '300.000'),
-(2, 2, 2, '5.000.000'),
-(3, 3, 3, '700.000'),
-(4, 4, 4, '200.000'),
-(5, 5, 5, '600.000'),
-(6, 6, 6, '800.000'),
-(7, 7, 7, '150.000'),
-(8, 8, 8, '400.000'),
-(9, 9, 9, '500.000'),
-(10, 10, 10, '1.000.000');
+(1, 1, 1, '300000'),
+(2, 2, 2, '500000'),
+(3, 3, 3, '700000'),
+(4, 4, 4, '200000'),
+(5, 5, 5, '600000'),
+(6, 6, 6, '800000'),
+(7, 7, 7, '150000'),
+(8, 8, 8, '400000'),
+(9, 9, 9, '500000'),
+(10, 10, 10, '100000');
 
 -- Insert data into Taller
 INSERT INTO Taller (TallerID, Nombre, ciudadID, EmpleadoID, ClienteID) VALUES 
